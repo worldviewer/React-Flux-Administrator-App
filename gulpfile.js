@@ -15,6 +15,7 @@ var config = {
 	paths: {
 		html: './src/*.html',
 		js: './src/**/*.js', // ** looks in subdirectories too
+		images: './src/images/*',
 		dist: './dist',
 		mainJs: './src/main.js',
 		css: [
@@ -65,14 +66,23 @@ gulp.task('css', function() {
 gulp.task('lint', function() {
 	return gulp.src(config.paths.js)
 		.pipe(lint({configFile: 'eslint.config.json'}))
-		// .pipe(lint())
 		.pipe(lint.format());
+});
+
+gulp.task('images', function() {
+	gulp.src(config.paths.images)
+		.pipe(gulp.dest(config.paths.dist + '/images'))
+		.pipe(connect.reload());
+
+		// publish favicon
+		gulp.src('./src/images/favicon.ico')
+			.pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('watch', function() {
 	gulp.watch(config.paths.html, ['html']);
 	gulp.watch(config.paths.js, ['js', 'lint']); // lints each time that javascript changes
-	gulp.watch(config.paths.css, ['css']);
+	gulp.watch(config.paths.images, ['images']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'lint', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
