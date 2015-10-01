@@ -27,6 +27,14 @@ var ManageAuthorPage = React.createClass({
 		};
 	},
 
+	componentWillMount: function() {
+		var authorId = this.props.params.id; // from the path '/author:id'
+
+		if (authorId) {
+			this.setState( {author: AuthorApi.getAuthorById(authorId)} );
+		}
+	},
+
 	// Common pattern to update state that is getting bubbled up from some child component
 	setAuthorState: function(event) {
 		this.setState( {dirty: true} );
