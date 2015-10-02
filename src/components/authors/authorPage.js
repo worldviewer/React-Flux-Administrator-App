@@ -16,11 +16,20 @@ var AuthorPage = React.createClass({
 		}
 	},
 
-	// componentDidMount: function() {
-	// 	if (this.isMounted()) {
-	// 		this.setState({ authors:  });
-	// 	}
-	// },
+	// This page differs from the manageAuthorPage, because it will update without
+	// a page reload ...
+
+	componentWillMount: function() {
+		AuthorStore.addChangeListener(this._onChange);
+	},
+
+	componentWillUnmount: function() {
+		AuthorStore.removeChangeListener(this._onChange);
+	},
+
+	_onChange: function() {
+		this.setState({ authors: AuthorStore.getAllAuthors() });
+	},
 
 	render: function() {
 		return (
