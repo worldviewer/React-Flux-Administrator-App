@@ -3,22 +3,24 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
-var AuthorApi = require('../../api/authorApi.js');
+// var AuthorApi = require('../../api/authorApi.js');
+var AuthorStore = require('../../stores/authorStore');
+var AuthorActions = require('../../actions/authorActions');
 var AuthorList = require('./authorList.js')
 
 var AuthorPage = React.createClass({
 	// Note that getInitialState returns an OBJECT!
 	getInitialState: function() {
 		return {
-			authors: []
+			authors: AuthorStore.getAllAuthors()
 		}
 	},
 
-	componentDidMount: function() {
-		if (this.isMounted()) {
-			this.setState({ authors: AuthorApi.getAllAuthors() });
-		}
-	},
+	// componentDidMount: function() {
+	// 	if (this.isMounted()) {
+	// 		this.setState({ authors:  });
+	// 	}
+	// },
 
 	render: function() {
 		return (
